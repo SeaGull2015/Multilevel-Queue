@@ -11,6 +11,7 @@ namespace Multilevel_Queue
         private string type;
         private uint id;
         public List<Process> processes;
+
         public Priority(string Type, uint ID)
         {
             Type = Type.ToLower();
@@ -21,10 +22,12 @@ namespace Multilevel_Queue
             type = Type;
             id = ID;
         }
+
         public uint getID()
         {
             return id;
         }
+
         public string getType()
         {
             return type;

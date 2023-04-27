@@ -12,9 +12,11 @@ namespace Multilevel_Queue
 {
     public partial class Form1 : Form
     {
+        private Processor processor;
         public Form1()
         {
             InitializeComponent();
+            processor = new Processor(4);
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -53,6 +55,29 @@ namespace Multilevel_Queue
         }
 
         private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox18_TextChanged(object sender, EventArgs e)
+        {
+            if (processor.isStep())
+            {
+                textBox18.Text = Convert.ToString(processor.getQuant());
+                MessageBox.Show("Failed to change quant, because the process is running", "Epic fail!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                processor.setQuant(Convert.ToInt32(textBox18.Text));
+            }
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox6_TextChanged(object sender, EventArgs e)
         {
 
         }

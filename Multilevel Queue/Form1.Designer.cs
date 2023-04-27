@@ -38,7 +38,6 @@ namespace Multilevel_Queue
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.textBox6 = new System.Windows.Forms.TextBox();
             this.textBox8 = new System.Windows.Forms.TextBox();
-            this.textBox10 = new System.Windows.Forms.TextBox();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.button5 = new System.Windows.Forms.Button();
             this.textBox14 = new System.Windows.Forms.TextBox();
@@ -47,7 +46,6 @@ namespace Multilevel_Queue
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
@@ -128,6 +126,8 @@ namespace Multilevel_Queue
             this.textBox6.Name = "textBox6";
             this.textBox6.Size = new System.Drawing.Size(205, 22);
             this.textBox6.TabIndex = 14;
+            this.textBox6.Text = "0";
+            this.textBox6.TextChanged += new System.EventHandler(this.textBox6_TextChanged);
             // 
             // textBox8
             // 
@@ -135,30 +135,27 @@ namespace Multilevel_Queue
             this.textBox8.Name = "textBox8";
             this.textBox8.Size = new System.Drawing.Size(205, 22);
             this.textBox8.TabIndex = 16;
-            // 
-            // textBox10
-            // 
-            this.textBox10.Location = new System.Drawing.Point(12, 199);
-            this.textBox10.Name = "textBox10";
-            this.textBox10.Size = new System.Drawing.Size(205, 22);
-            this.textBox10.TabIndex = 18;
+            this.textBox8.Text = "1";
             // 
             // comboBox2
             // 
             this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(12, 255);
+            this.comboBox2.Location = new System.Drawing.Point(12, 184);
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(205, 24);
             this.comboBox2.TabIndex = 20;
+            this.comboBox2.Items.Add("FCFS");
+            this.comboBox2.Items.Add("RoundRobin");
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(12, 285);
+            this.button5.Location = new System.Drawing.Point(11, 214);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(205, 51);
             this.button5.TabIndex = 21;
             this.button5.Text = "Добавить процесс";
             this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // textBox14
             // 
@@ -182,6 +179,8 @@ namespace Multilevel_Queue
             this.textBox18.Name = "textBox18";
             this.textBox18.Size = new System.Drawing.Size(205, 22);
             this.textBox18.TabIndex = 28;
+            this.textBox18.Text = "4";
+            this.textBox18.TextChanged += new System.EventHandler(this.textBox18_TextChanged);
             // 
             // label1
             // 
@@ -213,22 +212,11 @@ namespace Multilevel_Queue
             this.label3.TabIndex = 31;
             this.label3.Text = "CPUBurst:";
             // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F);
-            this.label4.Location = new System.Drawing.Point(13, 153);
-            this.label4.MaximumSize = new System.Drawing.Size(205, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(159, 34);
-            this.label4.TabIndex = 32;
-            this.label4.Text = "Относительное время начала исполнения";
-            // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F);
-            this.label5.Location = new System.Drawing.Point(13, 226);
+            this.label5.Location = new System.Drawing.Point(13, 155);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(84, 17);
             this.label5.TabIndex = 33;
@@ -318,7 +306,6 @@ namespace Multilevel_Queue
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -327,7 +314,6 @@ namespace Multilevel_Queue
             this.Controls.Add(this.textBox16);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.comboBox2);
-            this.Controls.Add(this.textBox10);
             this.Controls.Add(this.textBox8);
             this.Controls.Add(this.textBox6);
             this.Controls.Add(this.comboBox1);
@@ -355,7 +341,6 @@ namespace Multilevel_Queue
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.TextBox textBox6;
         private System.Windows.Forms.TextBox textBox8;
-        private System.Windows.Forms.TextBox textBox10;
         private System.Windows.Forms.ComboBox comboBox2;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.TextBox textBox14;
@@ -364,7 +349,6 @@ namespace Multilevel_Queue
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;

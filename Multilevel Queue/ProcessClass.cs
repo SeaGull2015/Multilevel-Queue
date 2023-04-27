@@ -27,6 +27,7 @@ namespace Multilevel_Queue
 			lastExec = 0;
 			finishTime = -1;
 		}
+
 		public Process(int time, int id, int starterTime)
 		{
 			ID = id;
@@ -37,6 +38,7 @@ namespace Multilevel_Queue
 			lastExec = 0;
 			finishTime = -1;
 		}
+
 		public Process(Process P)
 		{
 			ID = P.ID;
@@ -47,14 +49,17 @@ namespace Multilevel_Queue
 			lastExec = P.lastExec;
 			finishTime = P.finishTime;
 		}
+
 		~Process()
 		{
 			// as for now empty
 		}
+
 		public void setStartTime(int gtime)
 		{
 			startTime = gtime;
 		}
+
 		public int execute(int time, int gtime)
 		{
 			waitingTime += gtime - lastExec;
@@ -95,8 +100,6 @@ namespace Multilevel_Queue
 		public int getCPUBurst()
         {
 			return CPUburst;
-		}
-
-		
+		}		
 	}
 }
