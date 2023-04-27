@@ -38,6 +38,11 @@ namespace Multilevel_Queue
         { 
             return "Prioirty " + Convert.ToString(id); 
         }
+
+        public IEnumerator<Process> GetEnumerator()
+        {
+            return processes.GetEnumerator();
+        }
     }
 
 }

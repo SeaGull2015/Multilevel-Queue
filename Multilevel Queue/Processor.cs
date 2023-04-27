@@ -23,7 +23,7 @@ namespace Multilevel_Queue
             {
                 excess = priorities[priorityID].processes[0].execute(excess == 0 ? quant : excess, globalTime);
                 globalTime += quant - excess;
-                log += string.Format("FCFS`ed process {0} in priority {1}, executed for/time left: {2}/{3}", priorities[priorityID].processes[0].getID(), priorityID, quant - excess, priorities[priorityID].processes[0].showTime());
+                log += string.Format("FCFS`ed process {0} in priority {1}, executed for/time left: {2}/{3}\n", priorities[priorityID].processes[0].getID(), priorityID, quant - excess, priorities[priorityID].processes[0].showTime());
                 if (priorities[priorityID].processes[0].showTime() == 0) 
                 {
                     oldPriorities[priorityID].processes.Add(priorities[priorityID].processes[0]);
@@ -35,12 +35,16 @@ namespace Multilevel_Queue
         private void RoundRobin(int priorityID)
         {
             int excess = 0;
+            if (priorities[priorityID].processes.Count() < 0)
+            {
+                return;
+            }
             do
             {
                 excess = priorities[priorityID].processes[roundRobinPointer].execute(excess == 0 ? quant : excess, globalTime);
                 globalTime += quant - excess;
-                log += string.Format("RR`ed process {0} in priority {1}, executed for/time left: {2}/{3}", priorities[priorityID].processes[roundRobinPointer].getID(), priorityID, quant - excess, priorities[priorityID].processes[0].showTime());
-                if (priorities[priorityID].processes[roundRobinPointer].showTime() == 0)
+                log += string.Format("RR`ed process {0} in priority {1}, executed for/time left: {2}/{3}\n", priorities[priorityID].processes[roundRobinPointer].getID(), priorityID, quant - excess, priorities[priorityID].processes[0].showTime());
+                if (priorities[priorityID].processes[roundRobinPointer].showTime() <= 0)
                 {
                     oldPriorities[priorityID].processes.Add(priorities[priorityID].processes[roundRobinPointer]);
                     priorities[priorityID].processes.RemoveAt(roundRobinPointer);
@@ -48,8 +52,10 @@ namespace Multilevel_Queue
                 else
                 {
                     roundRobinPointer++;
+                    if (roundRobinPointer >= priorities[priorityID].processes.Count()) roundRobinPointer = 0;
                 }
-            } while (excess != 0);
+            } while (excess > 0 && priorities[priorityID].processes.Count() > 0); // if we finish all tasks within a priority we will lose excess time forever
+            if (priorities[priorityID].processes.Count() < 0) roundRobinPointer = 0;
         }
 
         public Processor(int Quant)
@@ -74,6 +80,26 @@ namespace Multilevel_Queue
         public List<Priority> GetPriorities()
         {
             return priorities;
+        }
+
+        public List<string> GetListPriorities()
+        {
+            List<string> l = new List<string>();
+            foreach(Priority p in priorities)
+            {
+                l.Add("Priority " + p.getID());
+            }
+            return l;
+        }
+
+        public List<string> GetListProcesses(int PriorityID)
+        {
+            List<string> l = new List<string>();
+            foreach (Process p in priorities[PriorityID])
+            {
+                l.Add(string.Format("Process(id/time) {0};{1}", p.getID(), p.showTime()));
+            }
+            return l;
         }
 
         public void AddPriority(string Type)
@@ -122,6 +148,7 @@ namespace Multilevel_Queue
         {
             isStepping = true; // we wanna lock our quant while we are running
             while (step()) ;
+            logResults();
             isStepping = false;
         }
 
@@ -135,6 +162,54 @@ namespace Multilevel_Queue
             string tlog = log;
             log = "";
             return tlog;
+        }
+
+        public void logResults()
+        {
+            List<double> l = getFullMeanWorkTime();
+            for (int i = 0; i < l.Count(); i++)
+            {
+                log += string.Format("Mean Full Work Time (priority {0}): {1}\n", i, l[i]);
+            }
+            l = getFullMeanWaitTime();
+            for (int i = 0; i < l.Count(); i++)
+            {
+                log += string.Format("Mean Full Wait Time (priority {0}): {1}\n", i, l[i]);
+            }
+        }
+
+        public List<double> getFullMeanWorkTime()
+        {
+            List<double> l = new List<double>();
+            foreach (Priority prior in oldPriorities)
+            {
+                int sum = 0;
+                int counter = 0;
+                foreach (Process proc in prior)
+                {
+                    sum += proc.getFullTime();
+                    counter++;
+                }
+                l.Add(Convert.ToDouble(sum) / counter);
+            }
+            return l;
+        }
+
+        public List<double> getFullMeanWaitTime()
+        {
+            List<double> l = new List<double>();
+            foreach (Priority prior in oldPriorities)
+            {
+                int sum = 0;
+                int counter = 0;
+                foreach (Process proc in prior)
+                {
+                    sum += proc.getWaitingTime();
+                    counter++;
+                }
+                l.Add(Convert.ToDouble(sum) / counter);
+            }
+            return l;
         }
     }
 }

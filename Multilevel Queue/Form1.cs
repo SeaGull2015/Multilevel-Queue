@@ -17,12 +17,16 @@ namespace Multilevel_Queue
         {
             InitializeComponent();
             processor = new Processor(4);
-            this.comboBox2.DataSource = processor.GetPriorities();
+            comboBox1.SelectedIndex = 1;
+            comboBox2.DataSource = processor.GetListPriorities();
+            listBox1.DataSource = processor.GetListPriorities();
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            int t = listBox1.SelectedIndex;
+            listBox2.DataSource = processor.GetListProcesses(t);
+            if (comboBox2.Items.Count > 0) comboBox2.SelectedIndex = t;
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -52,7 +56,9 @@ namespace Multilevel_Queue
 
         private void button3_Click(object sender, EventArgs e)
         {
-
+            processor.step();
+            richTextBox1.Text += processor.getLog();
+            listBox1.DataSource = processor.GetListPriorities();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -78,6 +84,8 @@ namespace Multilevel_Queue
             try
             {
                 processor.AddProcess(comboBox2.SelectedIndex, Convert.ToInt32(textBox6.Text), Convert.ToInt32(textBox8.Text));
+                this.listBox2.DataSource = processor.GetListProcesses(listBox1.SelectedIndex);
+                textBox6.Text = Convert.ToString(Convert.ToInt32(textBox6.Text) + 1);
             }
             catch
             {
@@ -93,13 +101,37 @@ namespace Multilevel_Queue
         private void button1_Click(object sender, EventArgs e)
         {
             processor.AddPriority(comboBox1.SelectedItem.ToString());
-            this.comboBox2.DataSource = processor.GetPriorities();
+            listBox1.DataSource = processor.GetListPriorities();
+            comboBox2.DataSource = processor.GetListPriorities();                        
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            processor.RemoveLastPriority();
-            this.comboBox2.DataSource = processor.GetPriorities();
+            try {
+                processor.RemoveLastPriority();
+                comboBox2.DataSource = processor.GetListPriorities();
+                listBox1.DataSource = processor.GetListPriorities();
+            }
+            catch
+            {
+                MessageBox.Show("Nothing to remove", "Epic fail!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            processor.run();
+            richTextBox1.Text += processor.getLog();
+        }
+
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
