@@ -17,6 +17,7 @@ namespace Multilevel_Queue
         {
             InitializeComponent();
             processor = new Processor(4);
+            this.comboBox2.DataSource = processor.GetPriorities();
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -74,12 +75,31 @@ namespace Multilevel_Queue
 
         private void button5_Click(object sender, EventArgs e)
         {
-
+            try
+            {
+                processor.AddProcess(comboBox2.SelectedIndex, Convert.ToInt32(textBox6.Text), Convert.ToInt32(textBox8.Text));
+            }
+            catch
+            {
+                MessageBox.Show("Bad inputs (probably)", "Epic fail!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void textBox6_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            processor.AddPriority(comboBox1.SelectedItem.ToString());
+            this.comboBox2.DataSource = processor.GetPriorities();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            processor.RemoveLastPriority();
+            this.comboBox2.DataSource = processor.GetPriorities();
         }
     }
 }

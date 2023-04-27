@@ -8,7 +8,7 @@ namespace Multilevel_Queue
 {
     class Processor
     {
-        public List<Priority> priorities; // gotta make it public to use it for listboxing
+        private List<Priority> priorities; // gotta make it public to use it for listboxing
         private List<Priority> oldPriorities; // to get data later. Gotta clear it though, some time maybe.
         private int quant;
         private int globalTime;
@@ -57,6 +57,8 @@ namespace Multilevel_Queue
             quant = Quant;
             globalTime = 0;
             roundRobinPointer = 0;
+            priorities = new List<Priority>();
+            oldPriorities = new List<Priority>();
         }
 
         public void setQuant(int Quant)
@@ -74,6 +76,23 @@ namespace Multilevel_Queue
             return priorities;
         }
 
+        public void AddPriority(string Type)
+        {
+            priorities.Add(new Priority(Type, priorities.Count()));
+            oldPriorities.Add(new Priority(Type, priorities.Count()));
+        }
+
+        public void AddProcess(int priorityID, int ProcessID, int CPUBurst)
+        {
+            priorities[priorityID].processes.Add(new Process(CPUBurst, ProcessID, globalTime));
+        }
+
+        public void RemoveLastPriority()
+        {
+            priorities.RemoveAt(priorities.Count() - 1);
+            oldPriorities.RemoveAt(priorities.Count() - 1);
+        }
+
         public bool step()
         {
             for (int i = 0; i < priorities.Count(); i++)
@@ -85,7 +104,7 @@ namespace Multilevel_Queue
                         FCFS(i);
                         return true;
                     }
-                    else if(priorities[i].getType() == "rr")
+                    else if(priorities[i].getType() == "round robin")
                     {
                         RoundRobin(i);
                         return true;

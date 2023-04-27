@@ -9,21 +9,22 @@ namespace Multilevel_Queue
     class Priority
     {
         private string type;
-        private uint id;
+        private int id;
         public List<Process> processes;
 
-        public Priority(string Type, uint ID)
+        public Priority(string Type, int ID)
         {
             Type = Type.ToLower();
-            if (Type != "fcfs" || Type != "rr")
+            if (Type != "fcfs" && Type != "round robin")
             {
                 throw new Exception("priority exception");
             }
             type = Type;
             id = ID;
+            processes = new List<Process>();
         }
 
-        public uint getID()
+        public int getID()
         {
             return id;
         }
@@ -32,5 +33,12 @@ namespace Multilevel_Queue
         {
             return type;
         }
+
+        public override string ToString() 
+        { 
+            return "Prioirty " + Convert.ToString(id); 
+        }
     }
+
 }
+

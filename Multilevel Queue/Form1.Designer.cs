@@ -83,6 +83,7 @@ namespace Multilevel_Queue
             this.button1.TabIndex = 6;
             this.button1.Text = "Добавить приоритет в конец";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
@@ -92,6 +93,7 @@ namespace Multilevel_Queue
             this.button2.TabIndex = 7;
             this.button2.Text = "Удалить последний приоритет";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button3
             // 
@@ -119,6 +121,9 @@ namespace Multilevel_Queue
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(205, 24);
             this.comboBox1.TabIndex = 12;
+            this.comboBox1.Items.Add("FCFS");
+            this.comboBox1.Items.Add("Round Robin");
+            this.comboBox1.SelectedIndex = 0;
             // 
             // textBox6
             // 
@@ -144,8 +149,6 @@ namespace Multilevel_Queue
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(205, 24);
             this.comboBox2.TabIndex = 20;
-            this.comboBox2.Items.Add("FCFS");
-            this.comboBox2.Items.Add("RoundRobin");
             // 
             // button5
             // 
