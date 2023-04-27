@@ -76,7 +76,14 @@ namespace Multilevel_Queue
             }
             else
             {
-                processor.setQuant(Convert.ToInt32(textBox18.Text));
+                try
+                {
+                    processor.setQuant(Convert.ToInt32(textBox18.Text));
+                }
+                catch
+                {
+                    MessageBox.Show("Bad input", "Epic fail!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
