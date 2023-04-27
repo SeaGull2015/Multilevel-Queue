@@ -59,6 +59,7 @@ namespace Multilevel_Queue
             processor.step();
             richTextBox1.Text += processor.getLog();
             listBox1.DataSource = processor.GetListPriorities();
+            listBox2.DataSource = processor.GetListProcesses(listBox1.SelectedIndex);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -84,7 +85,7 @@ namespace Multilevel_Queue
             try
             {
                 processor.AddProcess(comboBox2.SelectedIndex, Convert.ToInt32(textBox6.Text), Convert.ToInt32(textBox8.Text));
-                this.listBox2.DataSource = processor.GetListProcesses(listBox1.SelectedIndex);
+                listBox2.DataSource = processor.GetListProcesses(listBox1.SelectedIndex);
                 textBox6.Text = Convert.ToString(Convert.ToInt32(textBox6.Text) + 1);
             }
             catch
@@ -127,6 +128,7 @@ namespace Multilevel_Queue
         {
             processor.run();
             richTextBox1.Text += processor.getLog();
+            listBox2.DataSource = processor.GetListProcesses(listBox1.SelectedIndex);
         }
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
